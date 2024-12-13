@@ -42,6 +42,39 @@ public class Agent {
         env.grid[y][x].agent = true;
     }
 
+    public void shoot(String direction){
+        switch (direction) {
+            case "i":
+                if(this.y > 0)
+                    if(env.grid[y - 1][x].wumpus){
+                        env.grid[y-1][x].wumpus = false;
+                        env.removeStench(y-1, x);
+                    }
+                break;
+            case "j":
+                if(this.x > 0)
+                    if(env.grid[y][x-1].wumpus){
+                        env.grid[y][x-1].wumpus = false;
+                        env.removeStench(y, x-1);
+                    }
+                break;
+            case "k":
+                if(this.y < 3)
+                    if(env.grid[y + 1][x].wumpus){
+                        env.grid[y+1][x].wumpus = false;
+                        env.removeStench(y+1, x);
+                    }
+                break;
+            case "l":
+                if(this.x < 3)
+                    if(env.grid[y][x+1].wumpus){
+                        env.grid[y][x+1].wumpus = false;
+                        env.removeStench(y, x+1);
+                    }
+                break;
+            
+        }
+    }
     public static void main(String[] args) throws InterruptedException{
 
         Agent agent = new Agent();
@@ -62,6 +95,12 @@ public class Agent {
                     break;
                 case "s":
                     agent.moveDown();
+                    break;
+                case "i":
+                case "j":
+                case "l":
+                case "k":
+                    agent.shoot(inp);
                     break;
                 default:
                     System.out.println("Wrong input");
